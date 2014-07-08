@@ -10,7 +10,7 @@
 
 @interface PlayingCard()
 
-@property (strong, nonatomic) NSArray *rankStrings;
+
 
 @end
 
@@ -21,19 +21,17 @@
 {
 //    NSArray * rankStrings = @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"];
 //    return [NSString stringWithFormat:@"%d%@", self.rank, self.suit];
-    return [self.rankStrings[self.rank] stringByAppendingString:self.suit];
+    NSArray * rankStrings = [PlayingCard rankStrings];
+    return [rankStrings[self.rank] stringByAppendingString:self.suit];
 }
 
-- (NSArray *) rankStrings
++ (NSArray *) rankStrings
 {
-    
-    if (!_rankStrings) {
-        _rankStrings = @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"];
-    }
-    return _rankStrings;
+
+    return @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"];
 }
 
-@synthesize suit = _suit;
+@synthesize suit = _suit; // because we provide setter AND getter
 
 + (NSArray *)validSuits
 {
@@ -51,6 +49,19 @@
 - (NSString *)suit
 {
     return _suit ? _suit : @"?";
+}
+
++ (NSUInteger) maxRank
+{
+    return [[self rankStrings] count] - 1 ;
+}
+
+-(void) setRank:(NSUInteger)rank
+{
+    if(rank <= [PlayingCard maxRank])
+    {
+        _rank = rank;
+    }
 }
 
 
